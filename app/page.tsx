@@ -1,27 +1,25 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useState } from "react";
-import detectEthereumProvider from "@metamask/detect-provider";
-
+import { useReadContract } from "wagmi";
+  // import { USDTAbi } from "../abi/USDTAbi";
 
 export default function Home() {
 
   const [account, setAccount] = useState<string | null>(null);
+   
+  const USDTAddress = "0x...";
+   
 
-  const connectWallet = async () => {
-    const provider: any = await detectEthereumProvider();
+    const result = useReadContract({
+      // abi: USDTAbi,
+      address: USDTAddress,
+      functionName: "totalSupply",
+    });
+  
 
-    if (provider) {
-      try {
-        const accounts = await provider.request({ method: "eth_requestAccounts" });
-        setAccount(accounts[0]);
-      } catch (error) {
-        console.error("Error connecting to MetaMask", error);
-      }
-    } else {
-      console.error("MetaMask not detected");
-    }
-  };
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -29,8 +27,7 @@ export default function Home() {
         <div className={styles.ctas}>
           <a
             className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
+          
             rel="noopener noreferrer"
           >
             <Image
