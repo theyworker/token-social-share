@@ -2,7 +2,7 @@
  
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 import { cookieStorage, createStorage } from "wagmi";
-import { localhost } from "wagmi/chains";
+import { localhost, mainnet } from "wagmi/chains";
 
 
  
@@ -18,7 +18,7 @@ const metadata = {
 };
  
 export const config = defaultWagmiConfig({
-  chains: [localhost],
+  chains: [mainnet],
   projectId,
   metadata,
   ssr: true,
